@@ -1,0 +1,14 @@
+.containerNavLink {
+  display: flex;
+  flex-direction: row;
+}
+
+.footerNavLink {
+  text-transform: uppercase;
+  font-weight: 800;
+  font-size: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  margin-right: 32px;
+  color: #89939A;
+}

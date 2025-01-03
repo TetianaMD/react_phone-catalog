@@ -14,14 +14,26 @@ export const MenuItems = () => {
         >
           HOME
         </NavLink>
-        <NavLink className={classNames(styles.navLink)} to="/phones">
+        <NavLink
+          className={({ isActive }) =>
+            classNames(styles.navLink, { [styles.isActive]: isActive })
+          }
+          to="/phones"
+        >
           PHONES
         </NavLink>
-        <NavLink className={classNames(styles.navLink)} to="/tablets">
+        <NavLink
+          className={({ isActive }) =>
+            classNames(styles.navLink, { [styles.isActive]: isActive })
+          }
+          to="/tablets"
+        >
           TABLETS
         </NavLink>
         <NavLink
-          className={classNames(styles.navLink)}
+          className={({ isActive }) =>
+            classNames(styles.navLink, { [styles.isActive]: isActive })
+          }
           data-qa="hover"
           to="/accessories"
         >

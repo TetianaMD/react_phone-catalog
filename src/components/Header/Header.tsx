@@ -1,20 +1,18 @@
 import { Buttons } from './Buttons/Buttons';
 import { Logo } from './Logo/Logo';
 import { MenuItems } from './MenuItems/MenuItems';
-import './header.scss';
+import styles from './header.module.scss';
 
 export const Header = () => {
   return (
-    <header className="container_header">
+    <header className={styles.containerHeader}>
       <div>
         <Logo />
       </div>
 
-      <div>
+      <div className={styles.containerNav}>
         <MenuItems />
-      </div>
 
-      <div>
         <Buttons />
       </div>
     </header>

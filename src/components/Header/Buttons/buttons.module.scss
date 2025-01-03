@@ -1,23 +1,23 @@
 .containerButtons {
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  justify-content: flex-end;
+}
+
+.navigationLink {
+  position: relative;
+  display: flex;
   align-items: center;
-  cursor: pointer;
+  justify-content: center;
   width: 64px;
-  height: 64px;
-}
-
-.containerBasket {
-  display: flex;
-  flex-direction: column;
+  border-left: 1px solid #E2E6E9;
+  text-decoration: none;
   box-sizing: border-box;
 }
 
-.containerFavorite {
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
+.iconContainer {
+  display: block;
+  position: relative;
+  width: fit-content;
 }
 
 
