@@ -1,13 +1,15 @@
 import classNames from 'classnames';
 import styles from './productsSlider.module.scss';
 import { useEffect, useState } from 'react';
-import { Product } from '../../../types/Products';
+// import { Product } from '../../../types/Products';
+import { Phones } from '../../../types/Phones';
 
 export const ProductsSlider = () => {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Phones[]>([]);
+  const [startIndex, setStartIndex] = useState(0);
 
   useEffect(() => {
-    fetch('/api/products.json')
+    fetch('/api/phones.json')
       .then(response => {
         if (!response) {
           throw new Error();
@@ -18,25 +20,60 @@ export const ProductsSlider = () => {
       .then(data => setProducts(data));
   }, []);
 
+  const handleNext = () => {
+    if (startIndex + 4 < products.length) {
+      setStartIndex(startIndex + 1);
+    }
+  };
+
+  const handlePrev = () => {
+    if (startIndex > 0) {
+      setStartIndex(startIndex - 1);
+    }
+  };
+
   return (
     <div className={classNames(styles.containerProductsSlider)}>
-      <h1 className={classNames(styles.hotPrice)}>Hot prices</h1>
+      <div className={classNames(styles.hotPriceContainer)}>
+        <h1 className={classNames(styles.hotPrice)}>Hot prices</h1>
+        <div className={classNames(styles.buttonContainer)}>
+          <button
+            onClick={handlePrev}
+            className={classNames(styles.buttonRound)}
+            disabled={startIndex === 0}
+          >
+            <span className={classNames(styles.arrowLeft)}></span>
+          </button>
+          <button
+            onClick={handleNext}
+            className={classNames(styles.buttonRound)}
+            disabled={startIndex + 4 >= products.length}
+          >
+            <span className={classNames(styles.arrowRight)}></span>
+          </button>
+        </div>{' '}
+      </div>
       <div className={classNames(styles.productFlex)}>
-        {products.map(product => {
+        {products.slice(startIndex, startIndex + 4).map(product => {
           return (
             <div
               key={product.id}
               className={classNames(styles.containerProductCard)}
             >
               <img
-                src={product.image}
+                src={product.images}
                 alt={product.name}
                 className={classNames(styles.productImage)}
               />
               <h2 className={classNames(styles.productName)}>{product.name}</h2>
-              <p className={classNames(styles.productPrice)}>
-                ${product.price}
-              </p>
+              <div>
+                <p className={classNames(styles.productPrice)}>
+                  ${product.priceRegular}
+                </p>
+                <p className={classNames(styles.productPrice)}>
+                  ${product.priceDiscount}
+                </p>
+              </div>
               <p className={classNames(styles.productScreen)}>
                 Screen: {product.screen}
               </p>

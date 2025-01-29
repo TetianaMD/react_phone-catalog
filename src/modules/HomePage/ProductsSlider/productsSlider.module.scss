@@ -1,6 +1,49 @@
 .containerProductsSlider {
   padding: 20px;
-  background-color: #FFFFFF;
+  background-color: #FFF;
+}
+
+.hotPriceContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 8px;
+}
+
+.buttonRound {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;  width: 32px;
+  height: 32px;
+  border: 1px solid #E2E6E9;
+  background-color: #FFF;
+  border-radius: 50%;
+}
+
+.buttonRound:hover {
+  border-color: #B4BDC3;
+}
+
+.arrowLeft, .arrowRight {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border: solid #B4BDC3;
+  border-width: 0 2px 2px 0;
+}
+
+.arrowLeft {
+  transform: rotate(135deg);
+}
+
+.arrowRight {
+  transform: rotate(-45deg);
 }
 
 .hotPrice {
@@ -11,13 +54,12 @@
 
 .productFlex {
   display: flex;
-  // flex-wrap: wrap;
-  gap: 8px;
+  gap: 20px;
   justify-content: center;
 }
 
 .containerProductCard {
-  background-color: #FFFFFF;
+  background-color: #FFF;
   border: 1px solid #E2E6E9;
   border-radius: 8px;
   overflow: hidden;
@@ -39,7 +81,7 @@
   color: #0F0F11;
 }
 
-.productPrice{
+.productPrice {
   position: relative;
   width: 208px;
   border: 1px #E2E6E9;
@@ -49,6 +91,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  gap: 10px;
 }
 
 .productButton {
@@ -58,6 +101,10 @@
   border-radius: 48px;
   border: #4219D0;
   text-align: center;
+  color: #FFF;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
 }
 
 .buttonFavourites {
@@ -66,7 +113,7 @@
   height: 40px;
   border-radius: 48%;
   border: 1px solid #B4BDC3;
-  background-color: #FFFFFF;
+  background-color: #FFF;
 }
 
 .productFavourites {
