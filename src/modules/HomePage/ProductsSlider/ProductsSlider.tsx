@@ -61,7 +61,7 @@ export const ProductsSlider = () => {
               className={classNames(styles.containerProductCard)}
             >
               <img
-                src={product.images}
+                src={product.images[0]}
                 alt={product.name}
                 className={classNames(styles.productImage)}
               />
