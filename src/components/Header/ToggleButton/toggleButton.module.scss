@@ -1,0 +1,13 @@
+.themeButton {
+  padding: 10px 20px;
+  margin: 10px;
+  background-color: FFF;
+  border: none;
+  cursor: pointer;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}

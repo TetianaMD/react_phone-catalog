@@ -3,10 +3,17 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-left: 152px;
+  margin: 0 auto;
 }
 
 .homePage {
   size: 48px;
   color: #0F0F11;
+}
+
+.homePageContainer {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  height: auto;
 }

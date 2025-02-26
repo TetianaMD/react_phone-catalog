@@ -1,6 +1,7 @@
 import { Buttons } from './Buttons/Buttons';
 import { Logo } from './Logo/Logo';
 import { MenuItems } from './MenuItems/MenuItems';
+import { ToggleButton } from './ToggleButton/ToggleButton';
 import styles from './header.module.scss';
 
 export const Header = () => {
@@ -13,7 +14,10 @@ export const Header = () => {
       <div className={styles.containerNav}>
         <MenuItems />
 
-        <Buttons />
+        <div className={styles.containerButton}>
+          <ToggleButton />
+          <Buttons />
+        </div>
       </div>
     </header>
   );

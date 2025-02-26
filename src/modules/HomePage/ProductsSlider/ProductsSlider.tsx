@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 import styles from './productsSlider.module.scss';
 import { useEffect, useState } from 'react';
-// import { Product } from '../../../types/Products';
 import { Phones } from '../../../types/Phones';
 
 export const ProductsSlider = () => {
@@ -17,7 +16,15 @@ export const ProductsSlider = () => {
 
         return response.json();
       })
-      .then(data => setProducts(data));
+      .then(data => {
+        const sortedProducts = data.sort(
+          (a: Phones, b: Phones) =>
+            Math.abs(b.priceRegular - b.priceDiscount) -
+            Math.abs(a.priceRegular - a.priceDiscount),
+        );
+
+        setProducts(sortedProducts);
+      });
   }, []);
 
   const handleNext = () => {
@@ -33,7 +40,7 @@ export const ProductsSlider = () => {
   };
 
   return (
-    <div className={classNames(styles.containerProductsSlider)}>
+    <section className={classNames(styles.containerProductsSlider)}>
       <div className={classNames(styles.hotPriceContainer)}>
         <h1 className={classNames(styles.hotPrice)}>Hot prices</h1>
         <div className={classNames(styles.buttonContainer)}>
@@ -66,23 +73,32 @@ export const ProductsSlider = () => {
                 className={classNames(styles.productImage)}
               />
               <h2 className={classNames(styles.productName)}>{product.name}</h2>
-              <div>
-                <p className={classNames(styles.productPrice)}>
+              <div className={classNames(styles.productPrice)}>
+                <p className={classNames(styles.regularPrice)}>
                   ${product.priceRegular}
                 </p>
-                <p className={classNames(styles.productPrice)}>
+                <p className={classNames(styles.discountPrice)}>
                   ${product.priceDiscount}
                 </p>
               </div>
-              <p className={classNames(styles.productScreen)}>
-                Screen: {product.screen}
-              </p>
-              <p className={classNames(styles.productCapacity)}>
-                Capacity: {product.capacity}
-              </p>
-              <p className={classNames(styles.productRam)}>
-                RAM: {product.ram}
-              </p>
+              <div className={classNames(styles.productContainer)}>
+                <div className={classNames(styles.productInfo)}>
+                  <p className={classNames(styles.productDescription)}>
+                    Screen:
+                  </p>
+                  <p> {product.screen}</p>
+                </div>
+                <div className={classNames(styles.productInfo)}>
+                  <p className={classNames(styles.productDescription)}>
+                    Capacity:
+                  </p>
+                  <p> {product.capacity}</p>
+                </div>
+                <div className={classNames(styles.productInfo)}>
+                  <p className={classNames(styles.productDescription)}>RAM:</p>
+                  <p>{product.ram}</p>
+                </div>
+              </div>
 
               <div className={classNames(styles.containerButton)}>
                 <button className={classNames(styles.productButton)}>
@@ -101,6 +117,6 @@ export const ProductsSlider = () => {
           );
         })}
       </div>
-    </div>
+    </section>
   );
 };

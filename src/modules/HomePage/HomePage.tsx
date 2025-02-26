@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import styles from './homePage.module.scss';
 import { PicturesSlider } from './PicturesSlider/PicturesSlider';
 import { ProductsSlider } from './ProductsSlider/ProductsSlider';
+import { ShopByCategory } from './ShopByCategory/ShopByCategory';
 
 export const HomePage = () => {
   return (
@@ -10,8 +11,11 @@ export const HomePage = () => {
       <h1 className={classNames(styles.homePage)}>
         Welcome to Nice Gadgets store!
       </h1>
-      <PicturesSlider />
-      <ProductsSlider />
+      <div className={classNames(styles.homePageContainer)}>
+        <PicturesSlider />
+        <ShopByCategory />
+        <ProductsSlider />
+      </div>
     </div>
   );
 };

@@ -42,7 +42,7 @@ export const PicturesSlider = () => {
   };
 
   return (
-    <div className={classNames(styles.containerBannerSlider)}>
+    <section className={classNames(styles.containerBannerSlider)}>
       <button
         onClick={goToPrevious}
         className={classNames(styles.leftButtonSlider)}
@@ -79,6 +79,6 @@ export const PicturesSlider = () => {
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 };
