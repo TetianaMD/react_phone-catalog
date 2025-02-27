@@ -12,4 +12,5 @@ export interface Phones {
   images: string;
   ram: number;
   screen: number;
+  year: number;
 }
