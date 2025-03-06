@@ -2,7 +2,11 @@ import classNames from 'classnames';
 import styles from './picturesSlider.module.scss';
 import { useEffect, useState } from 'react';
 
-export const PicturesSlider = () => {
+interface PicturesSliderProps {
+  title: string;
+}
+
+export const PicturesSlider: React.FC<PicturesSliderProps> = ({ title }) => {
   const image = [
     './img/Banner.png',
     './img/banner-accessories.png',
@@ -42,42 +46,48 @@ export const PicturesSlider = () => {
   };
 
   return (
-    <section className={classNames(styles.containerBannerSlider)}>
-      <button
-        onClick={goToPrevious}
-        className={classNames(styles.leftButtonSlider)}
-      ></button>
-      <div className={classNames(styles.containerImageSlider)}>
-        <div
-          className={classNames(
-            styles.containerImage,
-            isAnimating && styles.hidden,
-          )}
-        >
-          <img
-            src={image[previousIndex !== null ? previousIndex : currentIndex]}
-            alt="Current"
-            className={classNames(styles.image)}
-          />
-        </div>
+    <section className={classNames(styles.containerBanner)}>
+      <div className={classNames(styles.containerTitle)}>
+        {' '}
+        <h1 className={classNames(styles.title)}>{title}</h1>
       </div>
-      <button
-        onClick={goToNext}
-        className={classNames(styles.rightButtonSlider)}
-      ></button>
-
-      <div className={classNames(styles.containerDashes)}>
-        {image.map((_, index) => (
-          <div key={index} className={classNames(styles.containerLine)}>
-            <button
-              className={classNames(
-                styles.dashes,
-                currentIndex === index && styles.activeDashes,
-              )}
-              onClick={() => startAnimation(index)}
-            ></button>
+      <div className={classNames(styles.containerBannerSlider)}>
+        {' '}
+        <button
+          onClick={goToPrevious}
+          className={classNames(styles.leftButtonSlider)}
+        ></button>
+        <div className={classNames(styles.containerImageSlider)}>
+          <div
+            className={classNames(
+              styles.containerImage,
+              isAnimating && styles.hidden,
+            )}
+          >
+            <img
+              src={image[previousIndex !== null ? previousIndex : currentIndex]}
+              alt="Current"
+              className={classNames(styles.image)}
+            />
           </div>
-        ))}
+        </div>
+        <button
+          onClick={goToNext}
+          className={classNames(styles.rightButtonSlider)}
+        ></button>
+        <div className={classNames(styles.containerDashes)}>
+          {image.map((_, index) => (
+            <div key={index} className={classNames(styles.containerLine)}>
+              <button
+                className={classNames(
+                  styles.dashes,
+                  currentIndex === index && styles.activeDashes,
+                )}
+                onClick={() => startAnimation(index)}
+              ></button>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

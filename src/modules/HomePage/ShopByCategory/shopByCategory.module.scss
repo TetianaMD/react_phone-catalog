@@ -17,6 +17,12 @@
   gap: 20px;
 }
 
+@media (max-width: 639px) {
+  .category {
+    flex-direction: column;
+  }
+}
+
 .ShopByCategory {
   font-size: 32px;
   font-weight: 800;
@@ -25,6 +31,7 @@
 .photoByCategory {
   display: flex;
   flex-direction: column;
+  text-decoration: none;
   transition: transform 0.3s ease-in-out;
 }
 

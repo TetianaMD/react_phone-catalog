@@ -28,11 +28,9 @@ export const HomePage = () => {
   return (
     <div className={classNames(styles.containerStore)}>
       <h1 hidden>Product Catalog</h1>
-      <h1 className={classNames(styles.homePage)}>
-        Welcome to Nice Gadgets store!
-      </h1>
       <div className={classNames(styles.homePageContainer)}>
-        <PicturesSlider products={newestProducts} title="Brand new models" />
+        <PicturesSlider title="Welcome to Nice Gadgets store!" />
+        <ProductsSlider products={newestProducts} title="Brand new models" />
         <ShopByCategory />
         <ProductsSlider products={phones} title="Hot prices" />
       </div>
