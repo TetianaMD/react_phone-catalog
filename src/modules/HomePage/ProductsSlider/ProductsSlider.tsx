@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import styles from './productsSlider.module.scss';
 import { useState } from 'react';
 import { Product } from '../../../types/Products';
+import { ProductCard } from '../../ProductPages/ProductCard/ProductCard';
 
 type ProductsSliderProps = {
   products: Product[];
@@ -49,59 +50,7 @@ export const ProductsSlider: React.FC<ProductsSliderProps> = ({
       </div>
       <div className={classNames(styles.productFlex)}>
         {products.slice(startIndex, startIndex + 4).map(product => {
-          return (
-            <div
-              key={product.id}
-              className={classNames(styles.containerProductCard)}
-            >
-              <img
-                src={product.image}
-                alt={product.name}
-                className={classNames(styles.productImage)}
-              />
-              <h2 className={classNames(styles.productName)}>{product.name}</h2>
-              <div className={classNames(styles.productPrice)}>
-                <p className={classNames(styles.regularPrice)}>
-                  ${product.fullPrice}
-                </p>
-                <p className={classNames(styles.discountPrice)}>
-                  ${product.price}
-                </p>
-              </div>
-              <div className={classNames(styles.productContainer)}>
-                <div className={classNames(styles.productInfo)}>
-                  <p className={classNames(styles.productDescription)}>
-                    Screen:
-                  </p>
-                  <p> {product.screen}</p>
-                </div>
-                <div className={classNames(styles.productInfo)}>
-                  <p className={classNames(styles.productDescription)}>
-                    Capacity:
-                  </p>
-                  <p> {product.capacity}</p>
-                </div>
-                <div className={classNames(styles.productInfo)}>
-                  <p className={classNames(styles.productDescription)}>RAM:</p>
-                  <p>{product.ram}</p>
-                </div>
-              </div>
-
-              <div className={classNames(styles.containerButton)}>
-                <button className={classNames(styles.productButton)}>
-                  Add to cart
-                </button>
-                <button className={classNames(styles.buttonFavourites)}>
-                  <a
-                    href="/#favourites"
-                    className={classNames(styles.productFavourites)}
-                  >
-                    <img src="./logo/favorite.png" alt="" />
-                  </a>
-                </button>
-              </div>
-            </div>
-          );
+          return <ProductCard key={product.id} product={product} />;
         })}
       </div>
     </section>

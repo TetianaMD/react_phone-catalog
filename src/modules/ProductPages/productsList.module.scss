@@ -1,0 +1,39 @@
+.containerTitlePage {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 94px;
+  height: 16px;
+  margin: 50px;
+}
+
+.arrowRight {
+  width: 16px;
+  height: 16px;
+}
+
+.page {
+  font-size: 12px;
+  font-weight: 600;
+  color: #89939A;
+  margin: 0;
+}
+
+.containerPage {
+  display: flex;
+  flex-direction: column;
+  margin: 50px;
+}
+
+.titlePage {
+  font-size: 48px;
+  font-weight: 800;
+  color: #0F0F11;
+  margin: 0;
+}
+
+.numModele {
+  font-size: 14px;
+  font-weight: 600;
+  color: #89939A;
+}
