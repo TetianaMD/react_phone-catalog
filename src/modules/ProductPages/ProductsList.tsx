@@ -1,12 +1,14 @@
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import styles from './productsList.module.scss';
 import { ProductCard } from './ProductCard/ProductCard';
+import { Product } from '../../types/Products';
 
 export const ProductList = () => {
-  const { category } = useParams();
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<Product[]>([]);
+  const { pathname } = useLocation();
+  const category = pathname.split('/')[1];
 
   useEffect(() => {
     fetch(`/api/${category}.json`)
@@ -16,8 +18,15 @@ export const ProductList = () => {
       });
   }, [category]);
 
+  const filteredProducts = products.filter(
+    product => product.category === category,
+  );
+
+  const formattedTitle =
+    category.charAt(0).toUpperCase() + category.slice(1).toLowerCase();
+
   return (
-    <div>
+    <div className={classNames(styles.containerPage)}>
       <div className={classNames(styles.containerTitlePage)}>
         <a href="#/">
           <img src="./logo/Home.png" alt="home" />
@@ -27,17 +36,19 @@ export const ProductList = () => {
           alt="ArrowRight"
           className={classNames(styles.arrowRight)}
         />
-        <h3 className={classNames(styles.page)}>Phones</h3>
+        <h3 className={classNames(styles.page)}>{category}</h3>
       </div>
 
       <div className={classNames(styles.containerPage)}>
-        <h1 className={classNames(styles.titlePage)}>Mobile phones</h1>
-        <h3 className={classNames(styles.numModele)}>95 models</h3>
+        <h1 className={classNames(styles.titlePage)}>{formattedTitle}</h1>
+        <h3 className={classNames(styles.numModele)}>
+          {filteredProducts.length} models
+        </h3>
       </div>
 
-      <div>
-        {products.map(product => (
-          <ProductCard key={product} product={product} />
+      <div className={classNames(styles.containerCards)}>
+        {products.slice(0, 16).map(product => (
+          <ProductCard key={product.id} product={product} />
         ))}
       </div>
     </div>

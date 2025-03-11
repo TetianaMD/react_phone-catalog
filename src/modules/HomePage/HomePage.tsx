@@ -8,6 +8,17 @@ import { Product } from '../../types/Products';
 
 export const HomePage = () => {
   const [products, setProducts] = useState<Product[]>([]);
+  const phonesLength = products.filter(
+    product => product.category === 'phones',
+  ).length;
+
+  const tabletsLength = products.filter(
+    product => product.category === 'tablets',
+  ).length;
+
+  const accessoriesLength = products.filter(
+    product => product.category === 'accessories',
+  ).length;
 
   useEffect(() => {
     fetch('/api/products.json')
@@ -31,7 +42,11 @@ export const HomePage = () => {
       <div className={classNames(styles.homePageContainer)}>
         <PicturesSlider title="Welcome to Nice Gadgets store!" />
         <ProductsSlider products={newestProducts} title="Brand new models" />
-        <ShopByCategory />
+        <ShopByCategory
+          phonesLength={phonesLength}
+          tabletsLength={tabletsLength}
+          accessoriesLength={accessoriesLength}
+        />
         <ProductsSlider products={phones} title="Hot prices" />
       </div>
     </div>

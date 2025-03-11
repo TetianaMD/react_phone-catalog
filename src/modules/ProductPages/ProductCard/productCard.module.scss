@@ -1,15 +1,21 @@
 .containerProductCard {
   display: flex;
+}
+
+.containerProductCard {
+  display: flex;
   flex-direction: column;
   justify-content: center;
   background-color: #FFF;
   border: 1px solid #E2E6E9;
   border-radius: 8px;
+  box-sizing: border-box;
   overflow: hidden;
   padding: 32px;
   gap: 8px;
   flex: 0 1 calc(272);
-  min-width: 272px;
+  width: calc(25% - 8px);
+  min-width: fit-content;
   height: 506px;
 }
 
