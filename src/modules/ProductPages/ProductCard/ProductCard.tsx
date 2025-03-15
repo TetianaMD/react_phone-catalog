@@ -7,20 +7,50 @@ type Props = {
 };
 
 export const ProductCard: React.FC<Props> = ({ product }) => {
+  const imageUrl =
+    product.image ||
+    (Array.isArray(product.images) && product.images.length > 0
+      ? product.images[0]
+      : '');
+
+  const priceDiscount =
+    product.fullPrice ||
+    (product.priceDiscount && product.priceDiscount > 0
+      ? product.priceDiscount
+      : 0);
+
+  const priceFull =
+    product.price ||
+    (product.priceRegular && product.priceRegular > 0
+      ? product.priceRegular
+      : 0);
+
   return (
     <div className={classNames(styles.containerCard)}>
       <div key={product.id} className={classNames(styles.containerProductCard)}>
-        <img
-          src={product.image}
-          alt={product.name}
-          className={classNames(styles.productImage)}
-        />
+        {imageUrl ? (
+          <img
+            src={product.image}
+            alt={product.name}
+            className={classNames(styles.productImage)}
+          />
+        ) : (
+          <div className={classNames(styles.placeholder)}>No Image</div>
+        )}
         <h2 className={classNames(styles.productName)}>{product.name}</h2>
         <div className={classNames(styles.productPrice)}>
-          <p className={classNames(styles.regularPrice)}>
-            ${product.fullPrice}
-          </p>
-          <p className={classNames(styles.discountPrice)}>${product.price}</p>
+          {priceFull ? (
+            <p className={classNames(styles.regularPrice)}>
+              ${product.fullPrice}
+            </p>
+          ) : (
+            <p>No price</p>
+          )}
+          {priceDiscount ? (
+            <p className={classNames(styles.discountPrice)}>${product.price}</p>
+          ) : (
+            <p>No price</p>
+          )}
         </div>
         <div className={classNames(styles.productContainer)}>
           <div className={classNames(styles.productInfo)}>

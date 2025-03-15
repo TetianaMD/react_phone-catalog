@@ -1,9 +1,5 @@
 .containerProductCard {
   display: flex;
-}
-
-.containerProductCard {
-  display: flex;
   flex-direction: column;
   justify-content: center;
   background-color: #FFF;
@@ -17,6 +13,11 @@
   width: calc(25% - 8px);
   min-width: fit-content;
   height: 506px;
+}
+
+.containerProductCard:hover {
+  transition: transform 0.3s ease-in-out;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
 }
 
 .productImage {
