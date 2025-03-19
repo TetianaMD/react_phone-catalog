@@ -8,10 +8,9 @@
   box-sizing: border-box;
   overflow: hidden;
   padding: 32px;
-  gap: 8px;
-  flex: 0 1 calc(272);
-  width: calc(25% - 8px);
-  min-width: fit-content;
+  flex: 1 1 calc(25% - 16px);
+  min-width: 200px;
+  max-width: 272px;
   height: 506px;
 }
 

@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import styles from './picturesSlider.module.scss';
 import { useEffect, useState } from 'react';
+import { Slide } from 'react-slideshow-image';
 
 interface PicturesSliderProps {
   title: string;
@@ -21,7 +22,7 @@ export const PicturesSlider: React.FC<PicturesSliderProps> = ({ title }) => {
     const interval = setInterval(() => {
       setPreviousIndex(currentIndex);
       setCurrentIndex(prevIndex => (prevIndex + 1) % image.length);
-    }, 5000);
+    }, 3000);
 
     return () => clearInterval(interval);
   }, [currentIndex, image.length]);
@@ -64,11 +65,32 @@ export const PicturesSlider: React.FC<PicturesSliderProps> = ({ title }) => {
               isAnimating && styles.hidden,
             )}
           >
-            <img
+            <Slide
+              easing="ease"
+              duration={3000}
+              transitionDuration={500}
+              autoplay={true}
+              infinite={true}
+              indicators={true}
+              arrows={true}
+            >
+              {image.map((src, index) => (
+                <div key={index} className={styles.slide}>
+                  <img
+                    src={
+                      src[previousIndex !== null ? previousIndex : currentIndex]
+                    }
+                    alt={`Slide ${index}`}
+                    className={styles.image}
+                  />
+                </div>
+              ))}
+            </Slide>
+            {/* <img
               src={image[previousIndex !== null ? previousIndex : currentIndex]}
               alt="Current"
               className={classNames(styles.image)}
-            />
+            /> */}
           </div>
         </div>
         <button

@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import styles from './productsList.module.scss';
 import { ProductCard } from './ProductCard/ProductCard';
 import { Product } from '../../types/Products';
@@ -9,11 +9,12 @@ import { useComponentLoading } from '../app/hooks';
 
 export const ProductList = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  const [sortOption, setSortOption] = useState('Newest');
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useComponentLoading(300);
   const { pathname } = useLocation();
   const category = pathname.split('/')[1];
+  const [searchParams, setSearchParams] = useSearchParams();
+  const sortOption = searchParams.get('sort') || 'Newest';
 
   useEffect(() => {
     setError(false);
@@ -64,7 +65,13 @@ export const ProductList = () => {
   const formattedTitle =
     category.charAt(0).toUpperCase() + category.slice(1).toLowerCase();
 
-  const sortedProducts = [...products].sort((a, b) => {
+  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newSort = e.target.value;
+
+    setSearchParams({ sort: newSort });
+  };
+
+  const sortedProducts = [...filteredProducts].sort((a, b) => {
     if (sortOption === 'Newest') {
       return b.year - a.year;
     }
@@ -74,7 +81,7 @@ export const ProductList = () => {
     }
 
     if (sortOption === 'Cheapest') {
-      return a.fullPrice - a.price - (b.fullPrice - b.price);
+      return a.price - b.price;
     }
 
     return 0;
@@ -112,32 +119,80 @@ export const ProductList = () => {
               {filteredProducts.length} models
             </h3>
 
-            <div className={classNames(styles.containerPage)}>
-              <p className={classNames(styles.sortTitle)}>Sort by</p>
-              <select
-                name="sortOption"
-                onChange={e => setSortOption(e.target.value)}
-                className={classNames(styles.sort)}
-              >
-                <option value="Newest" className={classNames(styles.sortBy)}>
-                  Newest
-                </option>
-                <option
-                  value="Alphabetically"
-                  className={classNames(styles.sortBy)}
+            <div className={classNames(styles.containerButtons)}>
+              <div className={classNames(styles.containerSort)}>
+                <p className={classNames(styles.sortTitle)}>Sort by</p>
+                <select
+                  name="sortOption"
+                  value={sortOption}
+                  onChange={handleSortChange}
+                  className={classNames(styles.sort)}
                 >
-                  Alphabetically
-                </option>
-                <option value="Cheapest" className={classNames(styles.sortBy)}>
-                  Cheapest
-                </option>
-              </select>
+                  <option value="Newest" className={classNames(styles.sortBy)}>
+                    Newest
+                  </option>
+                  <option
+                    value="Alphabetically"
+                    className={classNames(styles.sortBy)}
+                  >
+                    Alphabetically
+                  </option>
+                  <option
+                    value="Cheapest"
+                    className={classNames(styles.sortBy)}
+                  >
+                    Cheapest
+                  </option>
+                </select>
+              </div>
+
+              <div className={classNames(styles.containerSort)}>
+                {' '}
+                <p className={classNames(styles.sortTitle)}>Items on page</p>
+                <select
+                  name="sortOption"
+                  value={sortOption}
+                  onChange={handleSortChange}
+                  className={classNames(styles.sort)}
+                >
+                  <option value="4" className={classNames(styles.sortBy)}>
+                    4
+                  </option>
+                  <option
+                    value="Alphabetically"
+                    className={classNames(styles.sortBy)}
+                  >
+                    8
+                  </option>
+                  <option
+                    value="Cheapest"
+                    className={classNames(styles.sortBy)}
+                  >
+                    16
+                  </option>
+                  <option
+                    value="Cheapest"
+                    className={classNames(styles.sortBy)}
+                  >
+                    All
+                  </option>
+                </select>
+              </div>
             </div>
 
             <div className={classNames(styles.containerCards)}>
               {sortedProducts.slice(0, 16).map(product => (
                 <ProductCard key={product.id} product={product} />
               ))}
+            </div>
+
+            <div className={classNames(styles.containerRoundButtons)}>
+              <button className={classNames(styles.buttonRound)}>{'<'}</button>
+              <button className={classNames(styles.buttonRound)}>1</button>
+              <button className={classNames(styles.buttonRound)}>2</button>
+              <button className={classNames(styles.buttonRound)}>3</button>
+              <button className={classNames(styles.buttonRound)}>4</button>
+              <button className={classNames(styles.buttonRound)}>{'>'}</button>
             </div>
           </>
         )}

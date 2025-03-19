@@ -1,3 +1,10 @@
+.containerPage {
+  display: flex;
+  flex-direction: column;
+  margin: 50px;
+  width: 1200px;
+}
+
 .containerTitlePage {
   display: flex;
   flex-direction: row;
@@ -19,10 +26,16 @@
   margin: 0;
 }
 
-.containerPage {
+.containerButtons {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.containerSort {
   display: flex;
   flex-direction: column;
-  margin: 50px;
+  margin: 30px 0;
 }
 
 .titlePage {
@@ -60,7 +73,34 @@
 
 .containerCards {
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
-  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  gap: 16px;
+}
+
+.containerRoundButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-top: 50px;
+  gap: 5px;
+}
+
+.buttonRound {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;  width: 32px;
+  height: 32px;
+  border: 1px solid #B4BDC3;
+  background-color: #FFF;
+  border-radius: 50%;
+}
+
+.buttonRound:hover {
+  color: #FFFFFF;
+  background-color: #0F0F11;
 }
