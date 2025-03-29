@@ -15,6 +15,7 @@ export const ProductList = () => {
   const category = pathname.split('/')[1];
   const [searchParams, setSearchParams] = useSearchParams();
   const sortOption = searchParams.get('sort') || 'Newest';
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     setError(false);
@@ -58,6 +59,24 @@ export const ProductList = () => {
       });
   }, [category, setIsLoading]);
 
+  useEffect(() => {
+    if (currentPage !== 1) {
+      setSearchParams(prevParams => {
+        const newParams = new URLSearchParams(prevParams);
+
+        newParams.set('page', String(currentPage));
+
+        return newParams;
+      });
+    }
+  }, [currentPage, setSearchParams]);
+
+  useEffect(() => {
+    const pageParam = Number(searchParams.get('page')) || 1;
+
+    setCurrentPage(pageParam);
+  }, [searchParams]);
+
   const filteredProducts = products.filter(
     product => product.category === category,
   );
@@ -86,6 +105,50 @@ export const ProductList = () => {
 
     return 0;
   });
+
+  const itemsPerPage = Number(searchParams.get('itemsPerPage')) || 16;
+  const handleItemsPerPage = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newItemsPerPage = Number(e.target.value);
+
+    setSearchParams({
+      sort: sortOption,
+      itemsPerPage: String(newItemsPerPage),
+    });
+    setCurrentPage(1);
+  };
+
+  const totalPages = Math.ceil(sortedProducts.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const visibleProducts = sortedProducts.slice(startIndex, endIndex);
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const getPageNumbers = () => {
+    if (totalPages <= 4) {
+      return Array.from({ length: totalPages }, (_, index) => index + 1);
+    }
+
+    if (currentPage <= 2) {
+      return [1, 2, 3, 4];
+    }
+
+    if (currentPage >= totalPages - 1) {
+      return [totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
+    }
+
+    return [currentPage - 1, currentPage, currentPage + 1, currentPage + 2];
+  };
 
   return (
     <div className={classNames(styles.containerPage)}>
@@ -151,29 +214,20 @@ export const ProductList = () => {
                 <p className={classNames(styles.sortTitle)}>Items on page</p>
                 <select
                   name="sortOption"
-                  value={sortOption}
-                  onChange={handleSortChange}
+                  value={itemsPerPage}
+                  onChange={handleItemsPerPage}
                   className={classNames(styles.sort)}
                 >
                   <option value="4" className={classNames(styles.sortBy)}>
                     4
                   </option>
-                  <option
-                    value="Alphabetically"
-                    className={classNames(styles.sortBy)}
-                  >
+                  <option value="8" className={classNames(styles.sortBy)}>
                     8
                   </option>
-                  <option
-                    value="Cheapest"
-                    className={classNames(styles.sortBy)}
-                  >
+                  <option value="16" className={classNames(styles.sortBy)}>
                     16
                   </option>
-                  <option
-                    value="Cheapest"
-                    className={classNames(styles.sortBy)}
-                  >
+                  <option value="all" className={classNames(styles.sortBy)}>
                     All
                   </option>
                 </select>
@@ -181,19 +235,39 @@ export const ProductList = () => {
             </div>
 
             <div className={classNames(styles.containerCards)}>
-              {sortedProducts.slice(0, 16).map(product => (
+              {visibleProducts.slice(0, 16).map(product => (
                 <ProductCard key={product.id} product={product} />
               ))}
             </div>
 
-            <div className={classNames(styles.containerRoundButtons)}>
-              <button className={classNames(styles.buttonRound)}>{'<'}</button>
-              <button className={classNames(styles.buttonRound)}>1</button>
-              <button className={classNames(styles.buttonRound)}>2</button>
-              <button className={classNames(styles.buttonRound)}>3</button>
-              <button className={classNames(styles.buttonRound)}>4</button>
-              <button className={classNames(styles.buttonRound)}>{'>'}</button>
-            </div>
+            {totalPages > 1 && (
+              <div className={classNames(styles.containerRoundButtons)}>
+                <button
+                  className={classNames(styles.buttonRound)}
+                  onClick={handlePrevPage}
+                >
+                  {'<'}
+                </button>
+                {getPageNumbers().map(page => (
+                  <button
+                    key={page}
+                    className={classNames(styles.buttonRound, {
+                      [styles.active]: page === currentPage,
+                    })}
+                    onClick={() => setCurrentPage(page)}
+                  >
+                    {page}
+                  </button>
+                ))}
+                <button
+                  className={classNames(styles.buttonRound)}
+                  onClick={handleNextPage}
+                  disabled={currentPage === totalPages}
+                >
+                  {'>'}
+                </button>
+              </div>
+            )}
           </>
         )}
       </div>

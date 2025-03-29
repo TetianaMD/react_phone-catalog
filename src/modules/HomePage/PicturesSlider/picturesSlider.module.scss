@@ -13,11 +13,12 @@
   overflow: hidden;
 }
 
-.slide {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 300px;
+.slickContainer {
+  margin: 0 auto;
+  margin-top: 10px;
+  width: 100%;
+  max-width: 800px;
+  max-height: 300px;
 }
 
 .containerTitle {

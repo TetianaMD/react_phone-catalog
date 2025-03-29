@@ -1,7 +1,11 @@
 import classNames from 'classnames';
 import styles from './picturesSlider.module.scss';
-import { useEffect, useState } from 'react';
-import { Slide } from 'react-slideshow-image';
+import { useRef, useState } from 'react';
+import { Swiper, SwiperSlide, SwiperRef } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/autoplay';
 
 interface PicturesSliderProps {
   title: string;
@@ -15,35 +19,19 @@ export const PicturesSlider: React.FC<PicturesSliderProps> = ({ title }) => {
     './img/banner-tablets.png',
   ];
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [previousIndex, setPreviousIndex] = useState<number | null>(null);
-  const [isAnimating, setIsAnimating] = useState(false);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setPreviousIndex(currentIndex);
-      setCurrentIndex(prevIndex => (prevIndex + 1) % image.length);
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, [currentIndex, image.length]);
-
-  const startAnimation = (nextIndex: number) => {
-    setPreviousIndex(currentIndex);
-    setIsAnimating(true);
-    setTimeout(() => {
-      setCurrentIndex(nextIndex);
-      setIsAnimating(false);
-    }, 1000);
-  };
+  const swiperRef = useRef<SwiperRef | null>(null);
 
   const goToPrevious = () => {
     const prevIndex = currentIndex === 0 ? image.length - 1 : currentIndex - 1;
 
-    startAnimation(prevIndex);
+    setCurrentIndex(prevIndex);
   };
 
   const goToNext = () => {
-    startAnimation((currentIndex + 1) % image.length);
+    const nextIndex = (currentIndex + 1) % image.length;
+
+    setCurrentIndex(nextIndex);
   };
 
   return (
@@ -58,41 +46,20 @@ export const PicturesSlider: React.FC<PicturesSliderProps> = ({ title }) => {
           onClick={goToPrevious}
           className={classNames(styles.leftButtonSlider)}
         ></button>
-        <div className={classNames(styles.containerImageSlider)}>
-          <div
-            className={classNames(
-              styles.containerImage,
-              isAnimating && styles.hidden,
-            )}
-          >
-            <Slide
-              easing="ease"
-              duration={3000}
-              transitionDuration={500}
-              autoplay={true}
-              infinite={true}
-              indicators={true}
-              arrows={true}
-            >
-              {image.map((src, index) => (
-                <div key={index} className={styles.slide}>
-                  <img
-                    src={
-                      src[previousIndex !== null ? previousIndex : currentIndex]
-                    }
-                    alt={`Slide ${index}`}
-                    className={styles.image}
-                  />
-                </div>
-              ))}
-            </Slide>
-            {/* <img
-              src={image[previousIndex !== null ? previousIndex : currentIndex]}
-              alt="Current"
-              className={classNames(styles.image)}
-            /> */}
-          </div>
-        </div>
+        <Swiper
+          ref={swiperRef}
+          loop={true}
+          autoplay={{ delay: 3000, disableOnInteraction: false }}
+          speed={1000}
+          onSlideChange={swiper => setCurrentIndex(swiper.realIndex)}
+          className={classNames(styles.slickContainer)}
+        >
+          {image.map((img, index) => (
+            <SwiperSlide key={index} className={styles.slide}>
+              <img src={img} alt={`Slide ${index}`} className={styles.image} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
         <button
           onClick={goToNext}
           className={classNames(styles.rightButtonSlider)}
@@ -105,7 +72,7 @@ export const PicturesSlider: React.FC<PicturesSliderProps> = ({ title }) => {
                   styles.dashes,
                   currentIndex === index && styles.activeDashes,
                 )}
-                onClick={() => startAnimation(index)}
+                onClick={() => setCurrentIndex(index)}
               ></button>
             </div>
           ))}
