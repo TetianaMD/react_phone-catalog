@@ -2,10 +2,6 @@ import classNames from 'classnames';
 import styles from './picturesSlider.module.scss';
 import { useRef, useState } from 'react';
 import { Swiper, SwiperSlide, SwiperRef } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/autoplay';
 
 interface PicturesSliderProps {
   title: string;
@@ -51,8 +47,9 @@ export const PicturesSlider: React.FC<PicturesSliderProps> = ({ title }) => {
           loop={true}
           autoplay={{ delay: 3000, disableOnInteraction: false }}
           speed={1000}
-          onSlideChange={swiper => setCurrentIndex(swiper.realIndex)}
+          // onSlideChange={swiper => setCurrentIndex(swiper.realIndex)}
           className={classNames(styles.slickContainer)}
+          autoHeight
         >
           {image.map((img, index) => (
             <SwiperSlide key={index} className={styles.slide}>

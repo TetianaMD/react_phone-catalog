@@ -3,6 +3,8 @@ import { App } from './App';
 import { HomePage } from './modules/HomePage/HomePage';
 import { NotFoundPage } from './modules/NotFoundPage/NotFoundPage';
 import { ProductList } from './modules/ProductPages/ProductsList';
+import { ProductDetailsPage }
+  from './modules/ProductPages/ProductDetailsPage/ProductDetailsPage';
 
 export const Root = () => (
   <HashRouter>
@@ -14,6 +16,10 @@ export const Root = () => (
           <Route path="/phones" element={<ProductList />}></Route>
           <Route path="/tablets" element={<ProductList />}></Route>
           <Route path="/accessories" element={<ProductList />}></Route>
+          <Route
+            path="/product/:productId"
+            element={<ProductDetailsPage />}
+          ></Route>
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Route>

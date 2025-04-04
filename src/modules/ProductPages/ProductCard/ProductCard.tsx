@@ -1,6 +1,7 @@
 import classNames from 'classnames';
-import { Product } from '../../../types/Products';
+import { Product } from '../../../types/Product';
 import styles from './productCard.module.scss';
+import { NavLink } from 'react-router-dom';
 
 type Props = {
   product: Product;
@@ -29,15 +30,23 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
     <div className={classNames(styles.containerCard)}>
       <div key={product.id} className={classNames(styles.containerProductCard)}>
         {imageUrl ? (
-          <img
-            src={product.image}
-            alt={product.name}
-            className={classNames(styles.productImage)}
-          />
+          <nav>
+            <NavLink to={`/product/${product.itemId}`}>
+              <img
+                src={product.image}
+                alt={product.name}
+                className={classNames(styles.productImage)}
+              />
+            </NavLink>
+          </nav>
         ) : (
           <div className={classNames(styles.placeholder)}>No Image</div>
         )}
-        <h2 className={classNames(styles.productName)}>{product.name}</h2>
+        <nav>
+          <NavLink to={`/product/${product.itemId}`}>
+            <h2 className={classNames(styles.productName)}>{product.name}</h2>
+          </NavLink>
+        </nav>
         <div className={classNames(styles.productPrice)}>
           {priceFull ? (
             <p className={classNames(styles.regularPrice)}>
